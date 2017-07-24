@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Chr.h"
 #include "MyChr.h"
+#include "MapChr.h"
 
 #ifndef Game_h
 #define Game_h
@@ -9,10 +10,13 @@ extern Context context;
 
 class Game : public Scene
 {
-  Chr* chrs[32];
+  MapChr* mapChrs[32];
+  AChr* aChrs[32];
   MyChr* myChr;
   public:
-  byte getFreeChr();
+  char debug[32];
+  byte getFreeAChr();
+  byte getFreeMapChr();
   Chr* hitCheck(Chr* target);
   void initializeMap();
   virtual void init();

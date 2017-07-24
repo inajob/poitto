@@ -5,6 +5,7 @@ Chr::Chr(byte px, byte py, byte pw, byte ph){
   y = py << 4;
   w = pw << 4;
   h = ph << 4;
+  drain = false;
 }
 
 void Chr::init(){
