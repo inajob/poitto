@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "MapChr.h"
+#include "EChr.h"
 #include "BulletChr.h"
 
 Chr* Game::hitCheck(Chr* target){
@@ -50,6 +51,13 @@ void Game::init(){
     // todo: hitCheck?
     mapChrs[getFreeMapChr()] = tmp;
   }
+
+  for(byte i = 0; i < 5; i ++){
+    EChr* tmp = new EChr(random(8)*16, random(8)*8, 8, 8);
+    // todo: hitCheck?
+    aChrs[getFreeAChr()] = tmp;
+  }
+
 
   aChrs[getFreeAChr()] = myChr = new MyChr(32, 32, 4, 4);
   myChr->ay = 2; // gravity

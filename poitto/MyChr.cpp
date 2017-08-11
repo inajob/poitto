@@ -1,5 +1,4 @@
 #include "MyChr.h"
-#include "BulletChr.h"
 
 MyChr::MyChr(byte px, byte py, byte pw, byte ph) : AChr(px, py, pw, ph){
   jumpFlag = false;
