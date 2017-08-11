@@ -11,7 +11,9 @@ void EChr::init(){
 
 void EChr::hitX(Chr* chr){
   AChr::hitX(chr);
-  vx *= -1;
+  if(chr->collide == true){
+    vx *= -1;
+  }
 }
 
 void EChr::hitY(Chr* chr){
