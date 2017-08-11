@@ -37,7 +37,7 @@ byte Game::getFreeAChr(){
 void Game::initializeMap(){
  mapChrs[getFreeMapChr()] = new MapChr(0, 0, 128, 2);
  mapChrs[getFreeMapChr()] = new MapChr(0, 64, 128, 8);
- mapChrs[getFreeMapChr()] = new MapChr(0, 8, 2, 64 -8 -8);
+ mapChrs[getFreeMapChr()] = new MapChr(0, 0, 2, 64);
  mapChrs[getFreeMapChr()] = new MapChr(128-2, 2, 2, 64 -2);
 }
 
@@ -51,7 +51,7 @@ void Game::init(){
 
   initializeMap();
 
-  for(byte i = 0; i < 16; i ++){
+  for(byte i = 0; i < 8; i ++){
     MapChr* tmp = new MapChr(random(16)*8, random(8)*8, 8, 8);
     if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
@@ -161,8 +161,6 @@ void Game::draw(){
   arduboy.clear();
   arduboy.setCursor(0,0);
   arduboy.print(F("GAME"));
-  arduboy.setCursor(0,16);
-  arduboy.print(debug);
 
   for(byte i = 0; i < 32; i ++){
     if(mapChrs[i] != NULL){

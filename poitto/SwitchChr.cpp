@@ -18,9 +18,49 @@ void SwitchChr::draw(){
   }
 }
 
+void SwitchChr::addHitChrs(Chr* target){
+  for(byte i = 0; i < hitChrsIndex; i++){
+    if(hitChrs[i] == target){
+      return;
+    }
+  }
+  hitChrs[hitChrsIndex] = target;
+  hitChrsIndex ++;
+}
 void SwitchChr::hitX(Chr* target){
-  mode = !mode;
+  hit(target);
 }
 void SwitchChr::hitY(Chr* target){
-  mode = !mode;
+  hit(target);
 }
+void SwitchChr::hit(Chr* target){
+  addHitChrs(target);
+}
+void SwitchChr::copyHitChrs(){
+  for(byte i = 0; i < hitChrsIndex; i ++){
+    preHitChrs[i] = hitChrs[i];
+  }
+  preHitChrsIndex = hitChrsIndex;
+}
+void SwitchChr::preMove(){
+  copyHitChrs();
+  hitChrsIndex = 0;
+}
+void SwitchChr::postMove(){
+  bool flag = false;
+  if(hitChrsIndex > preHitChrsIndex){
+    flag = true;
+  }else if(hitChrsIndex == preHitChrsIndex){
+    for(byte i = 0; i < hitChrsIndex; i ++){
+      for(byte j = 0; j < preHitChrsIndex; j ++){
+        if(hitChrs[i] != preHitChrs[j]){
+          flag = true;
+        }
+      }
+    }
+  }
+  if(flag){
+    mode = !mode;
+  }
+}
+

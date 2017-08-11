@@ -14,7 +14,6 @@ class Game : public Scene
   AChr* aChrs[32];
   MyChr* myChr;
   public:
-  char debug[32];
   byte getFreeAChr();
   byte getFreeMapChr();
   byte hitCheck(Chr* target, Chr** result);
