@@ -12,10 +12,12 @@ void BulletChr::hitX(Chr* chr){
 }
 void BulletChr::hitY(Chr* chr){
   AChr::hitY(chr);
-  if(vy > 0){
-    drain = true;
+  if(chr->collide == true){
+    if(vy > 0){
+      drain = true;
+    }
+    vy = 0;
   }
-  vy = 0;
 }
 void BulletChr::draw(){
   arduboy.drawRect(x >> 4, y >> 4, w >> 4, h >> 4);

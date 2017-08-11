@@ -36,7 +36,7 @@ byte Game::getFreeAChr(){
 
 void Game::flip(char group, bool mode){
   for(byte i = 0; i < 32; i ++){
-    if(mapChrs[i]->group == group){
+    if(mapChrs[i] != NULL && mapChrs[i]->group == group){
       mapChrs[i]->collide = mode;
     }
   }
@@ -60,7 +60,7 @@ void Game::init(){
 
   initializeMap();
 
-  for(byte i = 0; i < 8; i ++){
+  for(byte i = 0; i < 4; i ++){
     MapChr* tmp = new MapChr(random(16)*8, random(8)*8, 8, 8);
     if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
@@ -68,15 +68,26 @@ void Game::init(){
       free(tmp);
     }
   }
-  for(byte i = 0; i < 4; i ++){
-    MapChr* tmp = new SwitchChr(random(16)*8, random(8)*8, 8, 8, this);
+  for(byte i = 0; i < 2; i ++){
+    SwitchChr* tmp = new SwitchChr(random(16)*8, random(8)*8, 8, 8, this);
+    tmp->sGroup = '1';
     if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
     }else{
       free(tmp);
     }
   }
-  for(byte i = 0; i < 16; i ++){
+  for(byte i = 0; i < 2; i ++){
+    SwitchChr* tmp = new SwitchChr(random(16)*8, random(8)*8, 8, 8, this);
+    tmp->sGroup = '2';
+    if(hitCheck(tmp, NULL) == 0){
+      mapChrs[getFreeMapChr()] = tmp;
+    }else{
+      free(tmp);
+    }
+  }
+ 
+  for(byte i = 0; i < 8; i ++){
     MapChr* tmp = new HalfChr(random(16)*8, random(8)*8, 8, 8);
     if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
@@ -84,6 +95,16 @@ void Game::init(){
       free(tmp);
     }
   }
+  for(byte i = 0; i < 8; i ++){
+    MapChr* tmp = new HalfChr(random(16)*8, random(8)*8, 8, 8);
+    tmp->group = '2';
+    if(hitCheck(tmp, NULL) == 0){
+      mapChrs[getFreeMapChr()] = tmp;
+    }else{
+      free(tmp);
+    }
+  }
+
 
 
 
