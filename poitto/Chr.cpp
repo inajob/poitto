@@ -14,6 +14,8 @@ void Chr::init(){
   w = 8;
   h = 8;
 }
+void Chr::preMove(){}
+void Chr::postMove(){}
 void Chr::runX(){}
 void Chr::runY(){}
 void Chr::hitX(Chr* chr){}

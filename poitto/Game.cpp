@@ -66,7 +66,9 @@ void Game::init(){
 SceneID Game::run(){
   bool pressCheck = false;
   BulletChr* b;
-  Chr* target;
+  Chr* tmp;
+  Chr* target[2];
+  byte targetCount = 0;
   if(arduboy.justPressed(A_BUTTON)){
     if(!myChr->jumpFlag){
       myChr->vy = -36;
@@ -82,7 +84,6 @@ SceneID Game::run(){
       b->x = myChr->x - b->w;
       b->vx = -16;
     }
-    sprintf(debug, "b %d, %d", b->x, b->y);
     b->vy = -36;
   }
   if(arduboy.justPressed(UP_BUTTON)){
@@ -103,19 +104,33 @@ SceneID Game::run(){
     myChr->vx = 0;
   }
 
+  for(byte i = 0; i < 32; i ++){if(mapChrs[i] != NULL){mapChrs[i]->preMove();}}
+  for(byte i = 0; i < 32; i ++){if(aChrs[i] != NULL){aChrs[i]->preMove();}}
+
   // check aChrs -> mapChrs
   for(byte i = 0; i < 32; i ++){
     if(aChrs[i] != NULL){
       aChrs[i]->runX();
-      if((target = hitCheck(aChrs[i])) != NULL){aChrs[i]->hitX(target);}
+      tmp = hitCheck(aChrs[i]);
+      if(tmp != NULL){
+        aChrs[i]->hitX(tmp);
+        tmp->hitX(aChrs[i]);
+      }
       aChrs[i]->runY();
-      if((target = hitCheck(aChrs[i])) != NULL){aChrs[i]->hitY(target);}
+      tmp = hitCheck(aChrs[i]);
+      if(tmp != NULL){
+        aChrs[i]->hitY(tmp);
+        tmp->hitY(aChrs[i]);
+      }
       if(aChrs[i]->drain){
         free(aChrs[i]);
         aChrs[i] = NULL;
       }
     }
   }
+
+  for(byte i = 0; i < 32; i ++){if(mapChrs[i] != NULL){mapChrs[i]->postMove();}}
+  for(byte i = 0; i < 32; i ++){if(aChrs[i] != NULL){aChrs[i]->postMove();}}
 
   return STAY;
 }

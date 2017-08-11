@@ -15,6 +15,8 @@ class Chr
     virtual void draw();
     virtual void runX();
     virtual void runY();
+    virtual void preMove();
+    virtual void postMove();
     virtual void hitX(Chr* chr);
     virtual void hitY(Chr* chr);
     virtual bool hitCheck(Chr* target);

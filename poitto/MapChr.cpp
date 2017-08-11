@@ -13,3 +13,4 @@ void MapChr::init(){
 void MapChr::draw(){
   arduboy.drawRect(x >> 4, y >> 4, w >> 4, h >> 4);
 }
+
