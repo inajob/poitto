@@ -160,6 +160,8 @@ SceneID Game::run(){
 void Game::draw(){
   arduboy.clear();
   arduboy.setCursor(0,0);
+  arduboy.setTextColor(WHITE);
+  arduboy.setTextBackground(BLACK);
   arduboy.print(F("GAME"));
 
   for(byte i = 0; i < 32; i ++){

@@ -7,6 +7,7 @@ class SwitchChr : public MapChr
 {
   bool mode = true;
   public:
+  char group;
   Chr* preHitChrs[4]; // memory
   byte preHitChrsIndex = 0;
   Chr* hitChrs[4]; // memory
