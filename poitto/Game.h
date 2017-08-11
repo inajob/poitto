@@ -17,7 +17,7 @@ class Game : public Scene
   char debug[32];
   byte getFreeAChr();
   byte getFreeMapChr();
-  Chr* hitCheck(Chr* target);
+  byte hitCheck(Chr* target, Chr** result);
   void initializeMap();
   virtual void init();
   virtual SceneID run();

@@ -26,18 +26,22 @@ void AChr::runY(){
 }
 
 void AChr::hitX(Chr* chr){
-  if(vx > 0){
-    x = chr->x - w;
-  }else{
-    x = chr->x + chr->w;
+  if(hitCheck(chr)){
+    if(vx > 0){
+      x = chr->x - w;
+    }else{
+      x = chr->x + chr->w;
+    }
   }
 }
 
 void AChr::hitY(Chr* chr){
-  if(vy > 0){
-    y = chr->y - h;
-  }else{
-    y = chr->y + chr->h;
+  if(hitCheck(chr)){
+    if(vy > 0){
+      y = chr->y - h;
+    }else{
+      y = chr->y + chr->h;
+    }
   }
 }
 

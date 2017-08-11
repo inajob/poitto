@@ -4,16 +4,20 @@
 #include "EChr.h"
 #include "BulletChr.h"
 
-Chr* Game::hitCheck(Chr* target){
+byte Game::hitCheck(Chr* target, Chr** result){
+  byte index = 0;
   for(byte i = 0; i < 32; i ++){
     if(mapChrs[i] != NULL){
       if(target == mapChrs[i]){continue;}
       if(mapChrs[i]->hitCheck(target)){
-        return mapChrs[i];
+        if(result != NULL){
+          result[index] = mapChrs[i];
+        }
+        index ++;
       }
     }
   }
-  return NULL; // not found
+  return index;
 }
 
 byte Game::getFreeMapChr(){
@@ -49,7 +53,7 @@ void Game::init(){
 
   for(byte i = 0; i < 16; i ++){
     MapChr* tmp = new MapChr(random(8)*16, random(8)*8, 8, 8);
-    if(hitCheck(tmp) == NULL){
+    if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
     }else{
       free(tmp);
@@ -57,7 +61,7 @@ void Game::init(){
   }
   for(byte i = 0; i < 16; i ++){
     MapChr* tmp = new SwitchChr(random(8)*16, random(8)*8, 8, 8);
-    if(hitCheck(tmp) == NULL){
+    if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
     }else{
       free(tmp);
@@ -79,7 +83,8 @@ void Game::init(){
 SceneID Game::run(){
   bool pressCheck = false;
   BulletChr* b;
-  Chr* tmp;
+  byte tmp;
+  Chr* hits[32];
   Chr* target[2];
   byte targetCount = 0;
   if(arduboy.justPressed(A_BUTTON)){
@@ -124,16 +129,20 @@ SceneID Game::run(){
   for(byte i = 0; i < 32; i ++){
     if(aChrs[i] != NULL){
       aChrs[i]->runX();
-      tmp = hitCheck(aChrs[i]);
-      if(tmp != NULL){
-        aChrs[i]->hitX(tmp);
-        tmp->hitX(aChrs[i]);
+      tmp = hitCheck(aChrs[i], hits);
+      if(tmp != 0){
+        for(byte j = 0; j < tmp; j ++){
+          aChrs[i]->hitX(hits[j]);
+          hits[j]->hitX(aChrs[i]);
+        }
       }
       aChrs[i]->runY();
-      tmp = hitCheck(aChrs[i]);
-      if(tmp != NULL){
-        aChrs[i]->hitY(tmp);
-        tmp->hitY(aChrs[i]);
+      tmp = hitCheck(aChrs[i], hits);
+      if(tmp != 0){
+        for(byte j = 0; j < tmp; j ++){
+          aChrs[i]->hitY(hits[j]);
+          hits[j]->hitY(aChrs[i]);
+        }
       }
       if(aChrs[i]->drain){
         free(aChrs[i]);
