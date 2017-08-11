@@ -52,7 +52,7 @@ void Game::init(){
   initializeMap();
 
   for(byte i = 0; i < 16; i ++){
-    MapChr* tmp = new MapChr(random(8)*16, random(8)*8, 8, 8);
+    MapChr* tmp = new MapChr(random(16)*8, random(8)*8, 8, 8);
     if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
     }else{
@@ -60,7 +60,7 @@ void Game::init(){
     }
   }
   for(byte i = 0; i < 16; i ++){
-    MapChr* tmp = new SwitchChr(random(8)*16, random(8)*8, 8, 8);
+    MapChr* tmp = new SwitchChr(random(16)*8, random(8)*8, 8, 8);
     if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
     }else{
@@ -70,7 +70,7 @@ void Game::init(){
 
 
   for(byte i = 0; i < 5; i ++){
-    EChr* tmp = new EChr(random(8)*16, random(8)*8, 8, 8);
+    EChr* tmp = new EChr(random(16)*8, random(8)*8, 8, 8);
     // todo: hitCheck?
     aChrs[getFreeAChr()] = tmp;
   }
