@@ -15,6 +15,7 @@ void BulletChr::hitY(Chr* chr){
   if(vy > 0){
     drain = true;
   }
+  vy = 0;
 }
 void BulletChr::draw(){
   arduboy.drawRect(x >> 4, y >> 4, w >> 4, h >> 4);
