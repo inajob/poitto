@@ -14,6 +14,7 @@ class Game : public Scene
   AChr* aChrs[32];
   MyChr* myChr;
   public:
+  void flip(char group, bool mode);
   byte getFreeAChr();
   byte getFreeMapChr();
   byte hitCheck(Chr* target, Chr** result);

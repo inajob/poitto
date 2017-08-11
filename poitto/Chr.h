@@ -9,6 +9,7 @@ class Chr
   public:
     int x,y;
     int w,h;
+    bool collide = true;
     bool drain;
     Chr(byte px, byte py, byte pw, byte ph);
     virtual void init();

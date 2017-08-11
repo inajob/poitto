@@ -12,7 +12,7 @@ void HalfChr::init(){
 }
 
 void HalfChr::draw(){
-  if(mode){
+  if(collide){
     arduboy.fillRect(x >> 4, y >> 4, w >> 4, h >> 4);
     arduboy.setCursor((x >> 4) + 1, (y >> 4) + 1);
     arduboy.setTextColor(BLACK);

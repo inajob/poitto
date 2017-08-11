@@ -14,10 +14,12 @@ void MyChr::hitX(Chr* chr){
 
 void MyChr::hitY(Chr* chr){
   AChr::hitY(chr);
-  if(vy > 0){
-    jumpFlag = false;
+  if(chr->collide == true){
+    if(vy > 0){
+      jumpFlag = false;
+    }
+    vy = 0;
   }
-  vy = 0;
 }
 
 void MyChr::draw(){

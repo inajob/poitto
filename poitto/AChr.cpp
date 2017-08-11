@@ -26,7 +26,7 @@ void AChr::runY(){
 }
 
 void AChr::hitX(Chr* chr){
-  if(hitCheck(chr)){
+  if(hitCheck(chr) && chr->collide == true){
     if(vx > 0){
       x = chr->x - w;
     }else{
@@ -36,7 +36,7 @@ void AChr::hitX(Chr* chr){
 }
 
 void AChr::hitY(Chr* chr){
-  if(hitCheck(chr)){
+  if(hitCheck(chr) && chr->collide == true){
     if(vy > 0){
       y = chr->y - h;
     }else{

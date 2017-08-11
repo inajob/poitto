@@ -34,6 +34,14 @@ byte Game::getFreeAChr(){
   return 255; // not found
 }
 
+void Game::flip(char group, bool mode){
+  for(byte i = 0; i < 32; i ++){
+    if(mapChrs[i]->group == group){
+      mapChrs[i]->collide = mode;
+    }
+  }
+}
+
 
 void Game::initializeMap(){
  mapChrs[getFreeMapChr()] = new MapChr(0, 0, 128, 2);
@@ -60,8 +68,8 @@ void Game::init(){
       free(tmp);
     }
   }
-  for(byte i = 0; i < 8; i ++){
-    MapChr* tmp = new SwitchChr(random(16)*8, random(8)*8, 8, 8);
+  for(byte i = 0; i < 4; i ++){
+    MapChr* tmp = new SwitchChr(random(16)*8, random(8)*8, 8, 8, this);
     if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
     }else{
