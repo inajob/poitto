@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "MapChr.h"
 #include "SwitchChr.h"
+#include "HalfChr.h"
 #include "EChr.h"
 #include "BulletChr.h"
 
@@ -59,7 +60,7 @@ void Game::init(){
       free(tmp);
     }
   }
-  for(byte i = 0; i < 16; i ++){
+  for(byte i = 0; i < 8; i ++){
     MapChr* tmp = new SwitchChr(random(16)*8, random(8)*8, 8, 8);
     if(hitCheck(tmp, NULL) == 0){
       mapChrs[getFreeMapChr()] = tmp;
@@ -67,6 +68,15 @@ void Game::init(){
       free(tmp);
     }
   }
+  for(byte i = 0; i < 16; i ++){
+    MapChr* tmp = new HalfChr(random(16)*8, random(8)*8, 8, 8);
+    if(hitCheck(tmp, NULL) == 0){
+      mapChrs[getFreeMapChr()] = tmp;
+    }else{
+      free(tmp);
+    }
+  }
+
 
 
   for(byte i = 0; i < 5; i ++){
