@@ -42,7 +42,6 @@ void Game::flip(char group, bool mode){
   }
 }
 
-
 void Game::initializeMap(){
  mapChrs[getFreeMapChr()] = new MapChr(0, 0, 128, 2);
  mapChrs[getFreeMapChr()] = new MapChr(0, 64, 128, 8);
@@ -105,15 +104,12 @@ void Game::init(){
     }
   }
 
-
-
-
   for(byte i = 0; i < 5; i ++){
-    EChr* tmp = new EChr(random(16)*8, random(8)*8, 8, 8);
+    EChr* tmp = new EChr(random(16)*8, random(8)*8, 4, 4);
+    tmp->ay = 2; // gravity
     // todo: hitCheck?
     aChrs[getFreeAChr()] = tmp;
   }
-
 
   aChrs[getFreeAChr()] = myChr = new MyChr(32, 32, 4, 4);
   myChr->ay = 2; // gravity
