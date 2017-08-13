@@ -19,6 +19,7 @@ class Game : public Scene
   byte getFreeMapChr();
   byte hitCheck(Chr* target, Chr** result);
   void initializeMap();
+  void loadMap(byte n);
   virtual void init();
   virtual SceneID run();
   virtual void draw();

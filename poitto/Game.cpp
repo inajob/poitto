@@ -4,6 +4,7 @@
 #include "HalfChr.h"
 #include "EChr.h"
 #include "BulletChr.h"
+#include "stages.h"
 
 byte Game::hitCheck(Chr* target, Chr** result){
   byte index = 0;
@@ -20,7 +21,6 @@ byte Game::hitCheck(Chr* target, Chr** result){
   }
   return index;
 }
-
 byte Game::getFreeMapChr(){
   for(byte i = 0; i < 32; i ++){
     if(mapChrs[i] == NULL){return i;}
@@ -42,7 +42,48 @@ void Game::flip(char group, bool mode){
   }
 }
 
+void Game::loadMap(byte n){
+  byte b;
+  EChr* eChr;
+  MapChr* mapChr;
+  for(byte i = 0; i < 8; i ++){
+    for(byte j = 0; j < 16; j ++){
+      b = pgm_read_byte_near(&stageMaps[n][i][j]);
+      switch(b){
+        case 0: break; // none
+        case 1: // MyChr
+          aChrs[getFreeAChr()] = myChr = new MyChr(8 * j, 8 * i, 4, 4);
+          myChr->ay = 2; // gravity
+          aChrs[getFreeAChr()] = myChr;
+        break;
+        case 2: // EChr
+          eChr = new EChr(8 * j, 8 * i, 4, 4);
+          eChr->ay = 2; // gravity
+          aChrs[getFreeAChr()] = eChr;
+          break;
+        case 3: // Block
+          mapChr = new MapChr(8 * j, 8 * i, 8, 8);
+          mapChrs[getFreeMapChr()] = mapChr;
+        break;
+      }
+    }
+  }
+}
+
 void Game::initializeMap(){
+ for(byte i = 0; i < 32; i ++){
+   if(mapChrs[i] == NULL){
+     free(mapChrs[i]);
+     mapChrs[i] = NULL;
+   }
+ }
+ for(byte i = 0; i < 32; i ++){
+   if(aChrs[i] == NULL){
+     free(aChrs[i]);
+     aChrs[i] = NULL;
+   }
+ }
+
  mapChrs[getFreeMapChr()] = new MapChr(0, 0, 128, 2);
  mapChrs[getFreeMapChr()] = new MapChr(0, 64, 128, 8);
  mapChrs[getFreeMapChr()] = new MapChr(0, 0, 2, 64);
@@ -58,7 +99,8 @@ void Game::init(){
   }
 
   initializeMap();
-
+  loadMap(0);
+  /*
   for(byte i = 0; i < 4; i ++){
     MapChr* tmp = new MapChr(random(16)*8, random(8)*8, 8, 8);
     if(hitCheck(tmp, NULL) == 0){
@@ -85,7 +127,6 @@ void Game::init(){
       free(tmp);
     }
   }
- 
   for(byte i = 0; i < 8; i ++){
     MapChr* tmp = new HalfChr(random(16)*8, random(8)*8, 8, 8);
     if(hitCheck(tmp, NULL) == 0){
@@ -113,6 +154,7 @@ void Game::init(){
 
   aChrs[getFreeAChr()] = myChr = new MyChr(32, 32, 4, 4);
   myChr->ay = 2; // gravity
+  */
 }
 
 SceneID Game::run(){
