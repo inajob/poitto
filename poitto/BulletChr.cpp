@@ -8,7 +8,9 @@ void BulletChr::init(){}
 
 void BulletChr::hitX(Chr* chr){
   AChr::hitX(chr);
-  vx = 0;
+  if(chr->collide == true){
+    vx = 0;
+  }
 }
 void BulletChr::hitY(Chr* chr){
   AChr::hitY(chr);
