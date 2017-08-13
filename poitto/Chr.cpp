@@ -6,6 +6,7 @@ Chr::Chr(byte px, byte py, byte pw, byte ph){
   w = pw << 4;
   h = ph << 4;
   drain = false;
+  type = 0;
 }
 
 void Chr::init(){

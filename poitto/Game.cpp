@@ -111,7 +111,7 @@ Game::Game(){
 
 void Game::init(){
   initializeMap();
-  loadMap(1);
+  loadMap(0);
   /*
   for(byte i = 0; i < 4; i ++){
     MapChr* tmp = new MapChr(random(16)*8, random(8)*8, 8, 8);
