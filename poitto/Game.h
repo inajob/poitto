@@ -10,7 +10,9 @@ extern Context context;
 
 class Game : public Scene
 {
-  MapChr* mapChrs[32];
+  const byte MAX_MAP = 48;
+  const byte MAX_CHR = 16;
+  MapChr* mapChrs[48];
   AChr* aChrs[16];
   MyChr* myChr;
   SceneID returnCode;

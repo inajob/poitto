@@ -17,8 +17,8 @@ Scene* scene;
 Title title;
 Game game;
 Clear clear;
-//Over over;
-//Ready ready;
+Over over;
+Ready ready;
 
 void setup(){
   arduboy.begin();
@@ -26,9 +26,9 @@ void setup(){
 
   title.init();
   game.init();
-  //clear.init();
-  //over.init();
-  //ready.init();
+  clear.init();
+  over.init();
+  ready.init();
 
   context.stage = 0;
 
@@ -49,19 +49,19 @@ void loop(){
     case STAY:
       break;
     case READY:
-      //scene = &ready;
+      scene = &ready;
       break;
     case TITLE:
       scene = &title;
       break;
     case CLEAR:
-      //scene = &clear;
+      scene = &clear;
       break;
     case OVER:
-      //scene = &over;
+      scene = &over;
       break;
     case GAME:
-      //game.init(); //bug!!
+      game.init(); //bug!!
       scene = &game;
       break;
   }

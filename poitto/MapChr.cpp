@@ -8,6 +8,7 @@ void MapChr::init(){
   y = 0;
   w = 8;
   h = 8;
+  group = 0;
 }
 
 void MapChr::draw(){

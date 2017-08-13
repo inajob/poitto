@@ -8,13 +8,14 @@
 #include "BulletChr.h"
 #include "stages.h"
 
+extern Context context;
 
 void Game::setClear(){
   returnCode = CLEAR;
 }
 byte Game::hitCheck(Chr* target, Chr** result){
   byte index = 0;
-  for(byte i = 0; i < 32; i ++){
+  for(byte i = 0; i < MAX_MAP; i ++){
     if(mapChrs[i] != NULL){
       if(target == mapChrs[i]){continue;}
       if(mapChrs[i]->hitCheck(target)){
@@ -28,20 +29,20 @@ byte Game::hitCheck(Chr* target, Chr** result){
   return index;
 }
 byte Game::getFreeMapChr(){
-  for(byte i = 0; i < 32; i ++){
+  for(byte i = 0; i < MAX_MAP; i ++){
     if(mapChrs[i] == NULL){return i;}
   }
   return 255; // not found
 }
 byte Game::getFreeAChr(){
-  for(byte i = 0; i < 16; i ++){
+  for(byte i = 0; i < MAX_CHR; i ++){
     if(aChrs[i] == NULL){return i;}
   }
   return 255; // not found
 }
 
 void Game::flip(char group, bool mode){
-  for(byte i = 0; i < 32; i ++){
+  for(byte i = 0; i < MAX_MAP; i ++){
     if(mapChrs[i] != NULL && mapChrs[i]->group == group){
       mapChrs[i]->collide = mode;
     }
@@ -52,6 +53,8 @@ void Game::loadMap(byte n){
   byte b;
   EChr* eChr;
   MapChr* mapChr;
+  SwitchChr* switchChr;
+  HalfChr* halfChr;
   for(byte i = 0; i < 8; i ++){
     for(byte j = 0; j < 16; j ++){
       b = pgm_read_byte_near(&stageMaps[n][i][j]);
@@ -60,10 +63,9 @@ void Game::loadMap(byte n){
         case 1: // MyChr
           aChrs[getFreeAChr()] = myChr = new MyChr(8 * j, 8 * i, 4, 4, this);
           myChr->ay = 2; // gravity
-          aChrs[getFreeAChr()] = myChr;
         break;
         case 2: // EChr
-          eChr = new EChr(8 * j, 8 * i, 4, 4);
+          eChr = new EChr(8 * j + 2, 8 * i + 2, 4, 4);
           eChr->ay = 2; // gravity
           aChrs[getFreeAChr()] = eChr;
           break;
@@ -75,19 +77,40 @@ void Game::loadMap(byte n){
           mapChr = new MapChr(8 * j, 8 * i, 8, 8);
           mapChrs[getFreeMapChr()] = mapChr;
         break;
+        case 10: // Switch
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+          switchChr = new SwitchChr(8 * j, 8 * i, 8, 8, this);
+          switchChr->sGroup = '0' + (b - 10);
+          mapChrs[getFreeMapChr()] = switchChr;
+        break;
+        case 20: // Half
+        case 21:
+        case 22:
+        case 23:
+        case 24:
+        case 25:
+          halfChr = new HalfChr(8 * j, 8 * i, 8, 8);
+          halfChr->group = '0' + (b - 20);
+          mapChrs[getFreeMapChr()] = halfChr;
+        break;
+
       }
     }
   }
 }
 
 void Game::initializeMap(){
- for(byte i = 0; i < 32; i ++){
+ for(byte i = 0; i < MAX_MAP; i ++){
    if(mapChrs[i] != NULL){
      free(mapChrs[i]);
      mapChrs[i] = NULL;
    }
  }
- for(byte i = 0; i < 16; i ++){
+ for(byte i = 0; i < MAX_CHR; i ++){
    if(aChrs[i] != NULL){
      free(aChrs[i]);
      aChrs[i] = NULL;
@@ -101,17 +124,18 @@ void Game::initializeMap(){
 }
 
 Game::Game(){
-  for(byte i = 0; i < 32; i ++){
+  for(byte i = 0; i < MAX_MAP; i ++){
     mapChrs[i] = NULL;
   }
-  for(byte i = 0; i < 16; i ++){
+  for(byte i = 0; i < MAX_CHR; i ++){
     aChrs[i] = NULL;
   }
 }
 
 void Game::init(){
   initializeMap();
-  loadMap(0);
+  loadMap(context.stage);
+
   /*
   for(byte i = 0; i < 4; i ++){
     MapChr* tmp = new MapChr(random(16)*8, random(8)*8, 8, 8);
@@ -173,7 +197,7 @@ SceneID Game::run(){
   bool pressCheck = false;
   BulletChr* b;
   byte tmp;
-  Chr* hits[16];
+  Chr* hits[MAX_CHR]; // max_chr?
   returnCode = STAY;
 
   if(arduboy.justPressed(A_BUTTON)){
@@ -211,11 +235,11 @@ SceneID Game::run(){
     myChr->vx = 0;
   }
 
-  for(byte i = 0; i < 32; i ++){if(mapChrs[i] != NULL){mapChrs[i]->preMove();}}
-  for(byte i = 0; i < 16; i ++){if(aChrs[i] != NULL){aChrs[i]->preMove();}}
+  for(byte i = 0; i < MAX_MAP; i ++){if(mapChrs[i] != NULL){mapChrs[i]->preMove();}}
+  for(byte i = 0; i < MAX_CHR; i ++){if(aChrs[i] != NULL){aChrs[i]->preMove();}}
 
   // check aChrs -> mapChrs
-  for(byte i = 0; i < 16; i ++){
+  for(byte i = 0; i < MAX_CHR; i ++){
     if(aChrs[i] != NULL){
       aChrs[i]->runX();
       tmp = hitCheck(aChrs[i], hits);
@@ -240,26 +264,26 @@ SceneID Game::run(){
     }
   }
 
-  for(byte i = 0; i < 32; i ++){if(mapChrs[i] != NULL){mapChrs[i]->postMove();}}
-  for(byte i = 0; i < 16; i ++){if(aChrs[i] != NULL){aChrs[i]->postMove();}}
+  for(byte i = 0; i < MAX_MAP; i ++){if(mapChrs[i] != NULL){mapChrs[i]->postMove();}}
+  for(byte i = 0; i < MAX_CHR; i ++){if(aChrs[i] != NULL){aChrs[i]->postMove();}}
 
   return returnCode;
 }
 
 void Game::draw(){
   arduboy.clear();
-  arduboy.setCursor(0,0);
-  arduboy.setTextColor(WHITE);
-  arduboy.setTextBackground(BLACK);
-  arduboy.print(F("GAME"));
+  //arduboy.setCursor(0,0);
+  //arduboy.setTextColor(WHITE);
+  //arduboy.setTextBackground(BLACK);
+  //arduboy.print(F("GAME"));
 
-  for(byte i = 0; i < 32; i ++){
+  for(byte i = 0; i < MAX_MAP; i ++){
     if(mapChrs[i] != NULL){
       mapChrs[i]->draw();
     }
   }
 
-  for(byte i = 0; i < 16; i ++){
+  for(byte i = 0; i < MAX_CHR; i ++){
     if(aChrs[i] != NULL){
       aChrs[i]->draw();
     }

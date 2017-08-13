@@ -1,7 +1,7 @@
 #include "SwitchChr.h"
 
 SwitchChr::SwitchChr(byte px, byte py, byte pw, byte ph, Game* pGame) : MapChr(px, py, pw, ph){
-  group = '0';
+  group = 0;
   sGroup = '1';
   game = pGame;
 }
