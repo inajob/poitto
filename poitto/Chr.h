@@ -11,6 +11,7 @@ class Chr
     int w,h;
     bool collide = true;
     bool drain;
+    byte type;
     Chr(byte px, byte py, byte pw, byte ph);
     virtual void init();
     virtual void draw();

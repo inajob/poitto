@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "Chr.h"
-#include "MyChr.h"
 #include "MapChr.h"
+#include "MyChr.h"
 
 #ifndef Game_h
 #define Game_h
@@ -11,9 +11,12 @@ extern Context context;
 class Game : public Scene
 {
   MapChr* mapChrs[32];
-  AChr* aChrs[32];
+  AChr* aChrs[16];
   MyChr* myChr;
+  SceneID returnCode;
   public:
+  Game();
+  void setClear();
   void flip(char group, bool mode);
   byte getFreeAChr();
   byte getFreeMapChr();

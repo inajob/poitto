@@ -8,6 +8,9 @@
 enum SceneID {
 TITLE,
 GAME,
+READY,
+CLEAR,
+OVER,
 STAY
 };
 

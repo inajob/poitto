@@ -3,9 +3,15 @@
 #include "SwitchChr.h"
 #include "HalfChr.h"
 #include "EChr.h"
+#include "GoalChr.h"
+#include "MyChr.h"
 #include "BulletChr.h"
 #include "stages.h"
 
+
+void Game::setClear(){
+  returnCode = CLEAR;
+}
 byte Game::hitCheck(Chr* target, Chr** result){
   byte index = 0;
   for(byte i = 0; i < 32; i ++){
@@ -28,7 +34,7 @@ byte Game::getFreeMapChr(){
   return 255; // not found
 }
 byte Game::getFreeAChr(){
-  for(byte i = 0; i < 32; i ++){
+  for(byte i = 0; i < 16; i ++){
     if(aChrs[i] == NULL){return i;}
   }
   return 255; // not found
@@ -61,7 +67,11 @@ void Game::loadMap(byte n){
           eChr->ay = 2; // gravity
           aChrs[getFreeAChr()] = eChr;
           break;
-        case 3: // Block
+        case 3: // Goal
+          mapChr = new GoalChr(8 * j, 8 * i, 8, 8);
+          mapChrs[getFreeMapChr()] = mapChr;
+          break;
+        case 4: // Block
           mapChr = new MapChr(8 * j, 8 * i, 8, 8);
           mapChrs[getFreeMapChr()] = mapChr;
         break;
@@ -72,13 +82,13 @@ void Game::loadMap(byte n){
 
 void Game::initializeMap(){
  for(byte i = 0; i < 32; i ++){
-   if(mapChrs[i] == NULL){
+   if(mapChrs[i] != NULL){
      free(mapChrs[i]);
      mapChrs[i] = NULL;
    }
  }
- for(byte i = 0; i < 32; i ++){
-   if(aChrs[i] == NULL){
+ for(byte i = 0; i < 16; i ++){
+   if(aChrs[i] != NULL){
      free(aChrs[i]);
      aChrs[i] = NULL;
    }
@@ -90,16 +100,18 @@ void Game::initializeMap(){
  mapChrs[getFreeMapChr()] = new MapChr(128-2, 2, 2, 64 -2);
 }
 
-void Game::init(){
+Game::Game(){
   for(byte i = 0; i < 32; i ++){
     mapChrs[i] = NULL;
   }
-  for(byte i = 0; i < 32; i ++){
+  for(byte i = 0; i < 16; i ++){
     aChrs[i] = NULL;
   }
+}
 
+void Game::init(){
   initializeMap();
-  loadMap(0);
+  loadMap(1);
   /*
   for(byte i = 0; i < 4; i ++){
     MapChr* tmp = new MapChr(random(16)*8, random(8)*8, 8, 8);
@@ -161,9 +173,9 @@ SceneID Game::run(){
   bool pressCheck = false;
   BulletChr* b;
   byte tmp;
-  Chr* hits[32];
-  Chr* target[2];
-  byte targetCount = 0;
+  Chr* hits[16];
+  returnCode = STAY;
+
   if(arduboy.justPressed(A_BUTTON)){
     if(!myChr->jumpFlag){
       myChr->vy = -36;
@@ -200,10 +212,10 @@ SceneID Game::run(){
   }
 
   for(byte i = 0; i < 32; i ++){if(mapChrs[i] != NULL){mapChrs[i]->preMove();}}
-  for(byte i = 0; i < 32; i ++){if(aChrs[i] != NULL){aChrs[i]->preMove();}}
+  for(byte i = 0; i < 16; i ++){if(aChrs[i] != NULL){aChrs[i]->preMove();}}
 
   // check aChrs -> mapChrs
-  for(byte i = 0; i < 32; i ++){
+  for(byte i = 0; i < 16; i ++){
     if(aChrs[i] != NULL){
       aChrs[i]->runX();
       tmp = hitCheck(aChrs[i], hits);
@@ -229,9 +241,9 @@ SceneID Game::run(){
   }
 
   for(byte i = 0; i < 32; i ++){if(mapChrs[i] != NULL){mapChrs[i]->postMove();}}
-  for(byte i = 0; i < 32; i ++){if(aChrs[i] != NULL){aChrs[i]->postMove();}}
+  for(byte i = 0; i < 16; i ++){if(aChrs[i] != NULL){aChrs[i]->postMove();}}
 
-  return STAY;
+  return returnCode;
 }
 
 void Game::draw(){
@@ -247,7 +259,7 @@ void Game::draw(){
     }
   }
 
-  for(byte i = 0; i < 32; i ++){
+  for(byte i = 0; i < 16; i ++){
     if(aChrs[i] != NULL){
       aChrs[i]->draw();
     }
