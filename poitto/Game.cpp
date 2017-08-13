@@ -58,7 +58,7 @@ void Game::loadMap(byte n){
       switch(b){
         case 0: break; // none
         case 1: // MyChr
-          aChrs[getFreeAChr()] = myChr = new MyChr(8 * j, 8 * i, 4, 4);
+          aChrs[getFreeAChr()] = myChr = new MyChr(8 * j, 8 * i, 4, 4, this);
           myChr->ay = 2; // gravity
           aChrs[getFreeAChr()] = myChr;
         break;

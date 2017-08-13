@@ -1,8 +1,10 @@
 #include "MyChr.h"
+#include "Game.h"
 
-MyChr::MyChr(byte px, byte py, byte pw, byte ph) : AChr(px, py, pw, ph){
+MyChr::MyChr(byte px, byte py, byte pw, byte ph, Game* pGame) : AChr(px, py, pw, ph){
   jumpFlag = false;
   isRight = true;
+  game = pGame;
 }
 
 void MyChr::init(){
@@ -10,6 +12,11 @@ void MyChr::init(){
 
 void MyChr::hitX(Chr* chr){
   AChr::hitX(chr);
+
+  if(chr->type == 1){
+    game->setClear();
+  }
+
 }
 
 void MyChr::hitY(Chr* chr){
@@ -19,6 +26,10 @@ void MyChr::hitY(Chr* chr){
       jumpFlag = false;
     }
     vy = 0;
+  }
+
+  if(chr->type == 1){
+    game->setClear();
   }
 }
 
