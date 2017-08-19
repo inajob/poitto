@@ -66,7 +66,7 @@ void Game::loadMap(byte n){
           myChr->ay = 2; // gravity
         break;
         case 2: // EChr
-          eChr = new EChr(8 * j + 2, 8 * i + 2, 4, 4);
+          eChr = new EChr(8 * j, 8 * i + 2, 8, 4);
           eChr->ay = 2; // gravity
           aChrs[getFreeAChr()] = eChr;
           break;
@@ -208,16 +208,19 @@ SceneID Game::run(){
     }
   }
   if(arduboy.justPressed(B_BUTTON)){
+    tmp = getFreeAChr();
+    if(tmp != 255){
     sound.tone(NOTE_A4, 100);
-    aChrs[getFreeAChr()] = b = new BulletChr(myChr->x >> 4, myChr->y >> 4, 4, 4);
-    if(myChr->isRight){
-      b->x = myChr->x + myChr->w;
-      b->vx = 8 + myChr->vx;
-    }else{
-      b->x = myChr->x - b->w;
-      b->vx = -8 + myChr->vx;
+      aChrs[tmp] = b = new BulletChr(myChr->x >> 4, myChr->y >> 4, 4, 4);
+      if(myChr->isRight){
+        b->x = myChr->x + myChr->w;
+        b->vx = 8 + myChr->vx;
+      }else{
+        b->x = myChr->x - b->w;
+        b->vx = -8 + myChr->vx;
+      }
+      b->vy = -36;
     }
-    b->vy = -36;
   }
   if(arduboy.justPressed(UP_BUTTON)){
   }
