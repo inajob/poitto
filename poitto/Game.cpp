@@ -42,6 +42,7 @@ byte Game::getFreeAChr(){
 }
 
 void Game::flip(char group, bool mode){
+  sound.tone(pgm_read_word_near(swTones + (group - '0')), 100);
   for(byte i = 0; i < MAX_MAP; i ++){
     if(mapChrs[i] != NULL && mapChrs[i]->group == group){
       mapChrs[i]->collide = mode;
@@ -207,6 +208,7 @@ SceneID Game::run(){
     }
   }
   if(arduboy.justPressed(B_BUTTON)){
+    sound.tone(NOTE_A4, 100);
     aChrs[getFreeAChr()] = b = new BulletChr(myChr->x >> 4, myChr->y >> 4, 4, 4);
     if(myChr->isRight){
       b->x = myChr->x + myChr->w;

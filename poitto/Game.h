@@ -6,7 +6,12 @@
 #ifndef Game_h
 #define Game_h
 extern Arduboy2 arduboy;
+extern ArduboyTones sound;
 extern Context context;
+
+PROGMEM const uint16_t swTones[10] = {
+  NOTE_C6, NOTE_D6, NOTE_E6, NOTE_F6, NOTE_G6, NOTE_A6, NOTE_B6, NOTE_C7, NOTE_D7, NOTE_E7
+};
 
 class Game : public Scene
 {
