@@ -210,10 +210,10 @@ SceneID Game::run(){
     aChrs[getFreeAChr()] = b = new BulletChr(myChr->x >> 4, myChr->y >> 4, 4, 4);
     if(myChr->isRight){
       b->x = myChr->x + myChr->w;
-      b->vx = 16;
+      b->vx = 8 + myChr->vx;
     }else{
       b->x = myChr->x - b->w;
-      b->vx = -16;
+      b->vx = -8 + myChr->vx;
     }
     b->vy = -36;
   }
@@ -266,6 +266,18 @@ SceneID Game::run(){
 
   for(byte i = 0; i < MAX_MAP; i ++){if(mapChrs[i] != NULL){mapChrs[i]->postMove();}}
   for(byte i = 0; i < MAX_CHR; i ++){if(aChrs[i] != NULL){aChrs[i]->postMove();}}
+
+  for(byte i = 0; i < MAX_CHR; i ++){
+    if(aChrs[i] != NULL && aChrs[i] != myChr){
+      if(aChrs[i]->hitCheck(myChr)){
+        if(aChrs[i]->type == 2){
+          // game over
+          returnCode = OVER;
+        }
+      }
+    }
+  }
+
 
   return returnCode;
 }

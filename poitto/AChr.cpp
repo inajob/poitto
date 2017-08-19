@@ -11,8 +11,8 @@ void AChr::init(){}
 
 void AChr::runX(){
   vx += ax;
-  if(abs(vx) > 8){
-    vx = 8 * vx/abs(vx);
+  if(abs(vx) > 32){
+    vx = 32 * vx/abs(vx);
   }
   x += vx;
 }

@@ -11,7 +11,9 @@ SceneID Over::run(){
 }
 
 void Over::draw(){
-  arduboy.clear();
-  arduboy.setCursor(0,0);
+  //arduboy.clear();
+  arduboy.setCursor(0,30);
+  arduboy.setTextColor(WHITE);
+  arduboy.setTextBackground(BLACK);
   arduboy.print(F("Game Over!"));
 }

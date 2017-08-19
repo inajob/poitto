@@ -10,6 +10,7 @@ class EChr : public AChr
   bool isRight;
   EChr(byte px, byte py, byte pw, byte ph);
   virtual void init();
+  virtual void runX();
   virtual void hitX(Chr*);
   virtual void hitY(Chr*);
   virtual void draw();

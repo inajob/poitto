@@ -11,6 +11,7 @@ class MyChr : public AChr
   Game* game;
   MyChr(byte px, byte py, byte pw, byte ph, Game* game);
   virtual void init();
+  virtual void runX();
   virtual void hitX(Chr*);
   virtual void hitY(Chr*);
   virtual void draw();

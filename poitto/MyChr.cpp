@@ -10,6 +10,14 @@ MyChr::MyChr(byte px, byte py, byte pw, byte ph, Game* pGame) : AChr(px, py, pw,
 void MyChr::init(){
 }
 
+void MyChr::runX(){
+  vx += ax;
+  if(abs(vx) > 8){
+    vx = 8 * vx/abs(vx);
+  }
+  x += vx;
+}
+
 void MyChr::hitX(Chr* chr){
   AChr::hitX(chr);
 
