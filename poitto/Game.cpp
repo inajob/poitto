@@ -198,7 +198,7 @@ SceneID Game::run(){
   bool pressCheck = false;
   BulletChr* b;
   byte tmp;
-  Chr* hits[MAX_CHR]; // max_chr?
+  Chr* hits[4]; // max_chr?
   returnCode = STAY;
 
   if(arduboy.justPressed(A_BUTTON)){
@@ -209,18 +209,18 @@ SceneID Game::run(){
   }
   if(arduboy.justPressed(B_BUTTON)){
     tmp = getFreeAChr();
-    if(tmp != 255){
-    sound.tone(NOTE_A4, 100);
-      aChrs[tmp] = b = new BulletChr(myChr->x >> 4, myChr->y >> 4, 4, 4);
-      if(myChr->isRight){
-        b->x = myChr->x + myChr->w;
-        b->vx = 8 + myChr->vx;
-      }else{
-        b->x = myChr->x - b->w;
-        b->vx = -8 + myChr->vx;
-      }
-      b->vy = -36;
-    }
+    //if(tmp != 255){
+    //  sound.tone(NOTE_A4, 100);
+    //  aChrs[tmp] = b = new BulletChr(myChr->x >> 4, myChr->y >> 4, 4, 4);
+    //  if(myChr->isRight){
+    //    b->x = myChr->x + myChr->w;
+    //    b->vx = 8 + myChr->vx;
+    //  }else{
+    //    b->x = myChr->x - b->w;
+    //    b->vx = -8 + myChr->vx;
+    //  }
+    //  b->vy = -36;
+    //}
   }
   if(arduboy.justPressed(UP_BUTTON)){
   }

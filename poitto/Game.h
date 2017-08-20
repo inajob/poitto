@@ -15,9 +15,9 @@ PROGMEM const uint16_t swTones[10] = {
 
 class Game : public Scene
 {
-  const byte MAX_MAP = 30;
+  const byte MAX_MAP = 32;
   const byte MAX_CHR = 8;
-  MapChr* mapChrs[30];
+  MapChr* mapChrs[32];
   AChr* aChrs[8];
   MyChr* myChr;
   SceneID returnCode;

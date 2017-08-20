@@ -1,6 +1,7 @@
 #include "MapChr.h"
 
 MapChr::MapChr(byte px, byte py, byte pw, byte ph) : Chr(px, py, pw, ph){
+  group = 0;
 }
 
 void MapChr::init(){
