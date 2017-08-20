@@ -52,6 +52,7 @@ void loop(){
       scene = &ready;
       break;
     case TITLE:
+      title.init();
       scene = &title;
       break;
     case CLEAR:
@@ -61,7 +62,7 @@ void loop(){
       scene = &over;
       break;
     case GAME:
-      game.init(); //bug!!
+      game.init();
       scene = &game;
       break;
   }

@@ -12,6 +12,7 @@ extern Context context;
 
 void Game::setClear(){
   returnCode = CLEAR;
+  sound.tone(NOTE_C5, 200, NOTE_E5,200, NOTE_G5, 400);
 }
 byte Game::hitCheck(Chr* target, Chr** result){
   byte index = 0;
@@ -278,6 +279,7 @@ SceneID Game::run(){
         if(aChrs[i]->type == 2){
           // game over
           returnCode = OVER;
+          sound.tone(NOTE_G5, 200, NOTE_C5,400);
         }
       }
     }
