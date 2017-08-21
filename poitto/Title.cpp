@@ -17,7 +17,7 @@ SceneID Title::run(){
     }
   }
   if(arduboy.justPressed(DOWN_BUTTON)){
-    if(cursor < 9){
+    if(cursor < 11){
       cursor ++;
     }
   }

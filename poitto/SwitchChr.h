@@ -6,7 +6,6 @@
 
 class SwitchChr : public MapChr
 {
-  bool mode = true;
   public:
   char sGroup;
   Game* game;

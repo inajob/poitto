@@ -43,11 +43,12 @@ byte Game::getFreeAChr(){
   return 255; // not found
 }
 
-void Game::flip(char group, bool mode){
+void Game::flip(char group){
   sound.tone(pgm_read_word_near(swTones + (group - '0')), 100);
+  modes[group - '0'] = !modes[group - '0'];
   for(byte i = 0; i < MAX_MAP; i ++){
     if(mapChrs[i] != NULL && mapChrs[i]->group == group){
-      mapChrs[i]->collide = mode;
+      mapChrs[i]->collide = modes[group - '0'];
     }
   }
 }
@@ -138,6 +139,10 @@ Game::Game(){
 void Game::init(){
   initializeMap();
   loadMap(context.stage);
+
+  for(byte i = 0; i < 10; i ++){
+    modes[i] = true;
+  }
 
   /*
   for(byte i = 0; i < 4; i ++){

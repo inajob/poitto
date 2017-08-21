@@ -19,12 +19,13 @@ class Game : public Scene
   const byte MAX_CHR = 8;
   MapChr* mapChrs[32];
   AChr* aChrs[8];
+  bool modes[10];
   MyChr* myChr;
   SceneID returnCode;
   public:
   Game();
   void setClear();
-  void flip(char group, bool mode);
+  void flip(char group);
   byte getFreeAChr();
   byte getFreeMapChr();
   byte hitCheck(Chr* target, Chr** result);

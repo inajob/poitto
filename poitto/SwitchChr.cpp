@@ -62,8 +62,7 @@ void SwitchChr::postMove(){
     }
   }
   if(flag){
-    mode = !mode;
-    game->flip(sGroup, mode);
+    game->flip(sGroup);
   }
 }
 
