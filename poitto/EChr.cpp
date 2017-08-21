@@ -1,4 +1,5 @@
 #include "EChr.h"
+#include "images.h"
 
 EChr::EChr(byte px, byte py, byte pw, byte ph) : AChr(px, py, pw, ph){
   jumpFlag = false;
@@ -32,5 +33,11 @@ void EChr::hitY(Chr* chr){
 }
 
 void EChr::draw(){
-  arduboy.fillRect(x >> 4, y >> 4, w >> 4, h >> 4);
+  //arduboy.fillRect(x >> 4, y >> 4, w >> 4, h >> 4);
+
+  if(vx < 0){
+    arduboy.drawBitmap(x >> 4, (y >> 4) - 4, enemy[0], 8, 8, 1);
+  }else{
+    arduboy.drawBitmap(x >> 4, (y >> 4) - 4, enemy[1], 8, 8, 1);
+  }
 }

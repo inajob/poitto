@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "MapChr.h"
+#include "HideChr.h"
 #include "SwitchChr.h"
 #include "HalfChr.h"
 #include "EChr.h"
@@ -119,10 +120,10 @@ void Game::initializeMap(){
    }
  }
 
- mapChrs[getFreeMapChr()] = new MapChr(0, 0, 128, 2);
- mapChrs[getFreeMapChr()] = new MapChr(0, 64, 128, 8);
- mapChrs[getFreeMapChr()] = new MapChr(0, 0, 2, 64);
- mapChrs[getFreeMapChr()] = new MapChr(128-2, 2, 2, 64 -2);
+ mapChrs[getFreeMapChr()] = new HideChr(0, 0, 128, 2);
+ mapChrs[getFreeMapChr()] = new HideChr(0, 64, 128, 8);
+ mapChrs[getFreeMapChr()] = new HideChr(0, 0, 2, 64);
+ mapChrs[getFreeMapChr()] = new HideChr(128-2, 2, 2, 64 -2);
 }
 
 Game::Game(){
@@ -291,10 +292,14 @@ SceneID Game::run(){
 
 void Game::draw(){
   arduboy.clear();
-  //arduboy.setCursor(0,0);
-  //arduboy.setTextColor(WHITE);
-  //arduboy.setTextBackground(BLACK);
-  //arduboy.print(F("GAME"));
+  arduboy.drawLine(0, 0, 4, 0);
+  arduboy.drawLine(0, 0, 0, 4);
+  arduboy.drawLine(127 - 4, 0, 127, 0);
+  arduboy.drawLine(127, 0, 127, 4);
+  arduboy.drawLine(127, 63 - 4, 127, 63);
+  arduboy.drawLine(127 - 4, 63, 127, 63);
+  arduboy.drawLine(0, 63 - 4, 0, 63);
+  arduboy.drawLine(0, 63, 4, 63);
 
   for(byte i = 0; i < MAX_MAP; i ++){
     if(mapChrs[i] != NULL){

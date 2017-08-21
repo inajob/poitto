@@ -1,4 +1,5 @@
 #include "HalfChr.h"
+#include "images.h"
 
 HalfChr::HalfChr(byte px, byte py, byte pw, byte ph) : MapChr(px, py, pw, ph){
   group = '1';
@@ -13,17 +14,10 @@ void HalfChr::init(){
 
 void HalfChr::draw(){
   if(collide){
-    arduboy.fillRect(x >> 4, y >> 4, w >> 4, h >> 4);
-    arduboy.setCursor((x >> 4) + 1, (y >> 4) + 1);
-    arduboy.setTextColor(BLACK);
-    arduboy.setTextBackground(WHITE);
-    arduboy.print(group);
+    arduboy.drawRoundRect(x >> 4, y >> 4, w >> 4, h >> 4, 1);
+    arduboy.drawBitmap(x >> 4, y >> 4, symbols[group - '0'], w >> 4, h >> 4, 1);
   }else{
-    //arduboy.drawRect(x >> 4, y >> 4, w >> 4, h >> 4);
-    arduboy.setCursor((x >> 4) + 1, (y >> 4) + 1);
-    arduboy.setTextColor(WHITE);
-    arduboy.setTextBackground(BLACK);
-    arduboy.print(group);
+    arduboy.drawBitmap(x >> 4, y >> 4, symbols[group - '0'], w >> 4, h >> 4, 1);
   }
 }
 

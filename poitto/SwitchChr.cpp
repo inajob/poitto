@@ -1,4 +1,5 @@
 #include "SwitchChr.h"
+#include "images.h"
 
 SwitchChr::SwitchChr(byte px, byte py, byte pw, byte ph, Game* pGame) : MapChr(px, py, pw, ph){
   group = 0;
@@ -15,19 +16,8 @@ void SwitchChr::init(){
 }
 
 void SwitchChr::draw(){
-  //if(mode){
-  //  arduboy.fillRect(x >> 4, y >> 4, w >> 4, h >> 4);
-  //  arduboy.setCursor((x >> 4) + 1, (y >> 4) + 1);
-  //  arduboy.setTextColor(BLACK);
-  //  arduboy.setTextBackground(WHITE);
-  //  arduboy.print(group);
-  //}else{
-    arduboy.drawRect(x >> 4, y >> 4, w >> 4, h >> 4);
-    arduboy.setCursor((x >> 4) + 1, (y >> 4) + 1);
-    arduboy.setTextColor(WHITE);
-    arduboy.setTextBackground(BLACK);
-    arduboy.print(sGroup);
-  //}
+    arduboy.fillRoundRect(x >> 4, y >> 4, w >> 4, h >> 4, 1);
+    arduboy.drawBitmap(x >> 4, y >> 4, symbols[sGroup - '0'], w >> 4, h >> 4, 0);
 }
 
 void SwitchChr::addHitChrs(Chr* target){

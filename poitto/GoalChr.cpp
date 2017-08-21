@@ -1,4 +1,5 @@
 #include "GoalChr.h"
+#include "images.h"
 
 GoalChr::GoalChr(byte px, byte py, byte pw, byte ph) : MapChr(px, py, pw, ph){
   type = 1;
@@ -12,10 +13,6 @@ void GoalChr::init(){
 }
 
 void GoalChr::draw(){
-  arduboy.setCursor((x >> 4) + 1, (y >> 4) + 1);
-  arduboy.setTextColor(WHITE);
-  arduboy.setTextBackground(BLACK);
-  arduboy.print(F("G"));
- 
+  arduboy.drawBitmap(x >> 4, y >> 4, images[2], 8, 8, 1);
 }
 
