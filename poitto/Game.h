@@ -28,7 +28,7 @@ class Game : public Scene
   void flip(char group);
   byte getFreeAChr();
   byte getFreeMapChr();
-  byte hitCheck(Chr* target, Chr** result);
+  byte hitCheck(Chr* target, MapChr** result);
   void initializeMap();
   void loadMap(byte n);
   virtual void init();

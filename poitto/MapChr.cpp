@@ -16,3 +16,8 @@ void MapChr::draw(){
   arduboy.drawRoundRect(x >> 4, y >> 4, w >> 4, h >> 4, 1);
 }
 
+void MapChr::hitY(AChr* target){
+  hitY((Chr*)target);
+}
+void MapChr::hitY(Chr* target){
+}

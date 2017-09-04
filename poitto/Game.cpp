@@ -2,6 +2,7 @@
 #include "MapChr.h"
 #include "HideChr.h"
 #include "SwitchChr.h"
+#include "SpringChr.h"
 #include "HalfChr.h"
 #include "EChr.h"
 #include "GoalChr.h"
@@ -15,7 +16,7 @@ void Game::setClear(){
   returnCode = CLEAR;
   sound.tone(NOTE_C5, 200, NOTE_E5,200, NOTE_G5, 400);
 }
-byte Game::hitCheck(Chr* target, Chr** result){
+byte Game::hitCheck(Chr* target, MapChr** result){
   byte index = 0;
   for(byte i = 0; i < MAX_MAP; i ++){
     if(mapChrs[i] != NULL){
@@ -79,6 +80,10 @@ void Game::loadMap(byte n){
           break;
         case 4: // Block
           mapChr = new MapChr(8 * j, 8 * i, 8, 8);
+          mapChrs[getFreeMapChr()] = mapChr;
+        break;
+        case 5: // Spring
+          mapChr = new SpringChr(8 * j, 8 * i, 8, 8);
           mapChrs[getFreeMapChr()] = mapChr;
         break;
         case 10: // Switch
@@ -205,7 +210,7 @@ SceneID Game::run(){
   bool pressCheck = false;
   BulletChr* b;
   byte tmp;
-  Chr* hits[4]; // max_chr?
+  MapChr* hits[4]; // max_chr?
   returnCode = STAY;
 
   if(arduboy.justPressed(A_BUTTON)){
@@ -250,6 +255,7 @@ SceneID Game::run(){
   for(byte i = 0; i < MAX_MAP; i ++){if(mapChrs[i] != NULL){mapChrs[i]->preMove();}}
   for(byte i = 0; i < MAX_CHR; i ++){if(aChrs[i] != NULL){aChrs[i]->preMove();}}
 
+  // X check
   // check aChrs -> mapChrs
   for(byte i = 0; i < MAX_CHR; i ++){
     if(aChrs[i] != NULL){
@@ -257,22 +263,50 @@ SceneID Game::run(){
       tmp = hitCheck(aChrs[i], hits);
       if(tmp != 0){
         for(byte j = 0; j < tmp; j ++){
-          aChrs[i]->hitX(hits[j]);
           hits[j]->hitX(aChrs[i]);
         }
       }
+    }
+  }
+  for(byte i = 0; i < MAX_CHR; i ++){
+    if(aChrs[i] != NULL){
+      tmp = hitCheck(aChrs[i], hits);
+      if(tmp != 0){
+        for(byte j = 0; j < tmp; j ++){
+          aChrs[i]->hitX(hits[j]);
+        }
+      }
+    }
+  }
+
+  // Y check
+  // check aChrs -> mapChrs
+  for(byte i = 0; i < MAX_CHR; i ++){
+    if(aChrs[i] != NULL){
       aChrs[i]->runY();
       tmp = hitCheck(aChrs[i], hits);
       if(tmp != 0){
         for(byte j = 0; j < tmp; j ++){
-          aChrs[i]->hitY(hits[j]);
-          hits[j]->hitY(aChrs[i]);
+          hits[j]->hitY(aChrs[i]); // hitY(AChr*) MapChr<->AChr ,hitY(Chr*) AChr<->MapChr
         }
       }
-      if(aChrs[i]->drain){
-        free(aChrs[i]);
-        aChrs[i] = NULL;
+    }
+  }
+  for(byte i = 0; i < MAX_CHR; i ++){
+    if(aChrs[i] != NULL){
+      tmp = hitCheck(aChrs[i], hits);
+      if(tmp != 0){
+        for(byte j = 0; j < tmp; j ++){
+          aChrs[i]->hitY(hits[j]); // hitY(Chr*) AChr<->MapChr
+        }
       }
+    }
+  }
+   // drain
+  for(byte i = 0; i < MAX_CHR; i ++){
+    if(aChrs[i]->drain){
+      free(aChrs[i]);
+      aChrs[i] = NULL;
     }
   }
 
