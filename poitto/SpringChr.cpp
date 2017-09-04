@@ -1,8 +1,10 @@
 #include "SpringChr.h"
 #include "images.h"
 
-SpringChr::SpringChr(byte px, byte py, byte pw, byte ph) : MapChr(px, py, pw, ph){
+
+SpringChr::SpringChr(byte px, byte py, byte pw, byte ph, MyChr* pMyChr) : MapChr(px, py, pw, ph){
   group = 0;
+  myChr = pMyChr;
 }
 
 void SpringChr::init(){
@@ -37,6 +39,9 @@ void SpringChr::preMove(){
 void SpringChr::postMove(){
   for(byte i = 0; i < hitChrsIndex; i ++){
     hitChrs[i]->vy = -36;
+    if(hitChrs[i] == myChr){
+      myChr->jumpFlag = true;
+    }
   }
 }
 

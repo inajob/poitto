@@ -83,7 +83,7 @@ void Game::loadMap(byte n){
           mapChrs[getFreeMapChr()] = mapChr;
         break;
         case 5: // Spring
-          mapChr = new SpringChr(8 * j, 8 * i, 8, 8);
+          mapChr = new SpringChr(8 * j, 8 * i, 8, 8, myChr);
           mapChrs[getFreeMapChr()] = mapChr;
         break;
         case 10: // Switch
@@ -255,10 +255,10 @@ SceneID Game::run(){
   for(byte i = 0; i < MAX_MAP; i ++){if(mapChrs[i] != NULL){mapChrs[i]->preMove();}}
   for(byte i = 0; i < MAX_CHR; i ++){if(aChrs[i] != NULL){aChrs[i]->preMove();}}
 
-  // X check
-  // check aChrs -> mapChrs
   for(byte i = 0; i < MAX_CHR; i ++){
     if(aChrs[i] != NULL){
+      // X check
+      // check aChrs -> mapChrs
       aChrs[i]->runX();
       tmp = hitCheck(aChrs[i], hits);
       if(tmp != 0){
@@ -266,23 +266,15 @@ SceneID Game::run(){
           hits[j]->hitX(aChrs[i]);
         }
       }
-    }
-  }
-  for(byte i = 0; i < MAX_CHR; i ++){
-    if(aChrs[i] != NULL){
       tmp = hitCheck(aChrs[i], hits);
       if(tmp != 0){
         for(byte j = 0; j < tmp; j ++){
           aChrs[i]->hitX(hits[j]);
         }
       }
-    }
-  }
 
-  // Y check
-  // check aChrs -> mapChrs
-  for(byte i = 0; i < MAX_CHR; i ++){
-    if(aChrs[i] != NULL){
+      // Y check
+      // check aChrs -> mapChrs
       aChrs[i]->runY();
       tmp = hitCheck(aChrs[i], hits);
       if(tmp != 0){
@@ -290,23 +282,18 @@ SceneID Game::run(){
           hits[j]->hitY(aChrs[i]); // hitY(AChr*) MapChr<->AChr ,hitY(Chr*) AChr<->MapChr
         }
       }
-    }
-  }
-  for(byte i = 0; i < MAX_CHR; i ++){
-    if(aChrs[i] != NULL){
       tmp = hitCheck(aChrs[i], hits);
       if(tmp != 0){
         for(byte j = 0; j < tmp; j ++){
           aChrs[i]->hitY(hits[j]); // hitY(Chr*) AChr<->MapChr
         }
       }
-    }
-  }
-   // drain
-  for(byte i = 0; i < MAX_CHR; i ++){
-    if(aChrs[i]->drain){
-      free(aChrs[i]);
-      aChrs[i] = NULL;
+
+      // drain
+      if(aChrs[i]->drain){
+        free(aChrs[i]);
+        aChrs[i] = NULL;
+      }
     }
   }
 
