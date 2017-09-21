@@ -7,7 +7,7 @@ extern Context context;
 
 class Title : public Scene
 {
-  byte cursor;
+  byte cursor = 1;
   public:
   virtual void init();
   virtual SceneID run();

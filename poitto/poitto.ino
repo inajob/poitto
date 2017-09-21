@@ -24,13 +24,14 @@ void setup(){
   arduboy.begin();
   arduboy.setFrameRate(60); // super fast
 
+  context.stage = 1;
+
   title.init();
   game.init();
   clear.init();
   over.init();
   ready.init();
 
-  context.stage = 0;
 
   scene = &title;
 }

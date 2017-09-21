@@ -13,6 +13,8 @@ class MapChr : public Chr
   virtual void draw();
   virtual void hitY(AChr* target);
   virtual void hitY(Chr* target);
+  virtual bool isCollide(AChr* target);
+  virtual bool isCollide(Chr* target);
 };
 
 #endif

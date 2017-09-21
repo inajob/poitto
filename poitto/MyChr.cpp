@@ -19,18 +19,37 @@ void MyChr::runX(){
   x += vx;
 }
 
+void MyChr::hitX(MapChr* chr){
+  AChr::hitX(chr);
+
+  if(chr->type == 1){
+    game->setClear();
+  }
+}
 void MyChr::hitX(Chr* chr){
   AChr::hitX(chr);
 
   if(chr->type == 1){
     game->setClear();
   }
-
 }
 
+void MyChr::hitY(MapChr* chr){
+  AChr::hitY(chr);
+  if(chr->isCollide(this)){
+    if(vy > 0){
+      jumpFlag = false;
+    }
+    vy = 0;
+  }
+
+  if(chr->type == 1){
+    game->setClear();
+  }
+}
 void MyChr::hitY(Chr* chr){
   AChr::hitY(chr);
-  if(chr->collide == true){
+  if(chr->isCollide(this)){
     if(vy > 0){
       jumpFlag = false;
     }

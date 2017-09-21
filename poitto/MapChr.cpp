@@ -21,3 +21,10 @@ void MapChr::hitY(AChr* target){
 }
 void MapChr::hitY(Chr* target){
 }
+
+bool MapChr::isCollide(AChr* target){
+  return isCollide((Chr*)target);
+}
+bool MapChr::isCollide(Chr* target){
+  return collide;
+}

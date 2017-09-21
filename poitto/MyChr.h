@@ -13,7 +13,9 @@ class MyChr : public AChr
   virtual void init();
   virtual void runX();
   virtual void hitX(Chr*);
+  virtual void hitX(MapChr*);
   virtual void hitY(Chr*);
+  virtual void hitY(MapChr*);
   virtual void draw();
 };
 

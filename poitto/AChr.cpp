@@ -1,4 +1,5 @@
 #include "AChr.h"
+#include "MapChr.h"
 
 AChr::AChr(byte px, byte py, byte pw, byte ph): Chr(px, py, pw, ph){
   vx = 0;
@@ -25,8 +26,8 @@ void AChr::runY(){
   y += vy;
 }
 
-void AChr::hitX(Chr* chr){
-  if(hitCheck(chr) && chr->collide == true){
+void AChr::hitX(MapChr* chr){
+  if(hitCheck(chr) && chr->isCollide(this) == true){
     if(vx > 0){
       x = chr->x - w;
     }else{
@@ -34,9 +35,26 @@ void AChr::hitX(Chr* chr){
     }
   }
 }
-
+void AChr::hitX(Chr* chr){
+  if(hitCheck(chr) && chr->isCollide(this) == true){
+    if(vx > 0){
+      x = chr->x - w;
+    }else{
+      x = chr->x + chr->w;
+    }
+  }
+}
+void AChr::hitY(MapChr* chr){
+  if(hitCheck(chr) && chr->isCollide(this) == true){
+    if(vy > 0){
+      y = chr->y - h;
+    }else{
+      y = chr->y + chr->h;
+    }
+  }
+}
 void AChr::hitY(Chr* chr){
-  if(hitCheck(chr) && chr->collide == true){
+  if(hitCheck(chr) && chr->isCollide(this) == true){
     if(vy > 0){
       y = chr->y - h;
     }else{

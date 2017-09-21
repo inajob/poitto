@@ -11,7 +11,9 @@ class EChr : public AChr
   EChr(byte px, byte py, byte pw, byte ph);
   virtual void init();
   virtual void runX();
+  virtual void hitX(MapChr*);
   virtual void hitX(Chr*);
+  virtual void hitY(MapChr*);
   virtual void hitY(Chr*);
   virtual void draw();
 };

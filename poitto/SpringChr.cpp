@@ -15,7 +15,7 @@ void SpringChr::init(){
 }
 
 void SpringChr::draw(){
-    arduboy.fillRoundRect(x >> 4, y >> 4, w >> 4, h >> 4, 1);
+  arduboy.drawBitmap(x >> 4, y >> 4, images[3], 8, 8, 1);
 }
 void SpringChr::addHitChrs(AChr* target){
   for(byte i = 0; i < hitChrsIndex; i++){

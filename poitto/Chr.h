@@ -7,9 +7,9 @@ extern Arduboy2 arduboy;
 class Chr
 {
   public:
+    bool collide = true;
     int x,y;
     int w,h;
-    bool collide = true;
     bool drain;
     byte type;
     Chr(byte px, byte py, byte pw, byte ph);
@@ -22,6 +22,7 @@ class Chr
     virtual void hitX(Chr* chr);
     virtual void hitY(Chr* chr);
     virtual bool hitCheck(Chr* target);
+    virtual bool isCollide(Chr* chr);
 };
 
 #endif

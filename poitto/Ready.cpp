@@ -1,4 +1,5 @@
 #include "Ready.h"
+#include "images.h"
 
 void Ready::init(){
   counter = 100;
@@ -19,4 +20,6 @@ void Ready::draw(){
   arduboy.print(F("Ready"));
   arduboy.setCursor(32,0);
   arduboy.print(counter);
+
+  arduboy.drawBitmap(16 + ((100 - counter)/2), 32 - 8 + random(3), logo, 16, 16, 1);
 }

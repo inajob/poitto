@@ -37,3 +37,7 @@ bool Chr::hitCheck(Chr* target){
   }
   return false;
 }
+
+bool Chr::isCollide(Chr* chr){
+  return collide;
+}

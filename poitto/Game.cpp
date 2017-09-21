@@ -3,6 +3,7 @@
 #include "HideChr.h"
 #include "SwitchChr.h"
 #include "SpringChr.h"
+#include "ArrowChr.h"
 #include "HalfChr.h"
 #include "EChr.h"
 #include "GoalChr.h"
@@ -84,6 +85,22 @@ void Game::loadMap(byte n){
         break;
         case 5: // Spring
           mapChr = new SpringChr(8 * j, 8 * i, 8, 8, myChr);
+          mapChrs[getFreeMapChr()] = mapChr;
+        break;
+        case 6: // Arrow:up
+          mapChr = new ArrowChr(8 * j, 8 * i, 8, 8, ArrowChr::UP);
+          mapChrs[getFreeMapChr()] = mapChr;
+        break;
+        case 7: // Arrow:down
+          mapChr = new ArrowChr(8 * j, 8 * i, 8, 8, ArrowChr::DOWN);
+          mapChrs[getFreeMapChr()] = mapChr;
+        break;
+        case 8: // Arrow:left
+          mapChr = new ArrowChr(8 * j, 8 * i, 8, 8, ArrowChr::LEFT);
+          mapChrs[getFreeMapChr()] = mapChr;
+        break;
+        case 9: // Arrow:right
+          mapChr = new ArrowChr(8 * j, 8 * i, 8, 8, ArrowChr::RIGHT);
           mapChrs[getFreeMapChr()] = mapChr;
         break;
         case 10: // Switch

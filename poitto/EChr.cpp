@@ -1,4 +1,5 @@
 #include "EChr.h"
+#include "MapChr.h"
 #include "images.h"
 
 EChr::EChr(byte px, byte py, byte pw, byte ph) : AChr(px, py, pw, ph){
@@ -19,17 +20,30 @@ void EChr::runX(){
   x += vx;
 }
 
-
-
-void EChr::hitX(Chr* chr){
+void EChr::hitX(MapChr* chr){
   AChr::hitX(chr);
-  if(chr->collide == true){
+  if(chr->isCollide(this)){
     vx *= -1;
   }
 }
-
+void EChr::hitX(Chr* chr){
+  AChr::hitX(chr);
+  if(chr->isCollide(this)){
+    vx *= -1;
+  }
+}
+void EChr::hitY(MapChr* chr){
+  AChr::hitY(chr);
+  if(chr->isCollide(this)){
+    vy = 0;
+  }
+}
 void EChr::hitY(Chr* chr){
   AChr::hitY(chr);
+  if(chr->isCollide(this)){
+    vy = 0;
+  }
+
 }
 
 void EChr::draw(){
